@@ -3,8 +3,6 @@ package com.ronhan.admin.common.config;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.sun.xml.internal.bind.v2.TODO;
-import org.apache.commons.lang3.CharSet;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 
@@ -12,7 +10,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Redis 序列化
+ * FastJson 序列化
  *
  * @author qingdong.zhang
  * @version 1.0
