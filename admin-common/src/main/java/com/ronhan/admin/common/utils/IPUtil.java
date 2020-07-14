@@ -52,8 +52,8 @@ public class IPUtil {
                     break;
             }
 
-            DataBlock dataBlock = null;
-            if (Util.isIpAddress(ip) == false) {
+            DataBlock dataBlock;
+            if (!Util.isIpAddress(ip)) {
                 System.out.println("Error: Invalid ip address");
             }
             dataBlock = (DataBlock) method.invoke(searcher, ip);
