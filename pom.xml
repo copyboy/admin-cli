@@ -13,13 +13,14 @@
     <artifactId>admin</artifactId>
     <version>0.1</version>
     <name>admin</name>
+    <packaging>pom</packaging>
     <description>基于Spring Boot 、Spring Security 的 RBAC 权限管理系统</description>
 
     <modules>
         <module>admin-common</module>
-<!--        <module>admin-system</module>-->
-<!--        <module>admin-log</module>-->
-<!--        <module>admin-generator</module>-->
+        <module>admin-log</module>
+        <module>admin-generator</module>
+        <!--        <module>admin-system</module>-->
 <!--        <module>admin-security</module>-->
     </modules>
 
@@ -34,8 +35,9 @@
         <jasypt.version>2.1.0</jasypt.version>
         <spring-social.version>1.1.6.RELEASE</spring-social.version>
         <elasticsearch.version>7.3.1</elasticsearch.version>
-        <pre.version>1.4</pre.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
+
+        <admin.version>0.1</admin.version>
     </properties>
 
     <dependencies>
