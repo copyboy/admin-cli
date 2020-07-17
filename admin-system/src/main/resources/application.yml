@@ -1,0 +1,9 @@
+server:
+  port: 8091
+
+# dev-开发环境 sit-集成测试 sandbox-沙箱 uat-预发 prod-线上环境
+spring:
+  application:
+    name: admin
+  profiles:
+    active: dev
