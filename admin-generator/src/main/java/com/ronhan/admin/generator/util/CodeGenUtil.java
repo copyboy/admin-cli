@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
+import com.ronhan.admin.generator.domain.CodeGenConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,25 @@ public class CodeGenUtil {
     /**
      * 根据表自动生成
      *
+     * @param dataSourceConfig 数据源配置
+     * @param config           代码相关配置
+     */
+    public boolean generateByTables(DataSourceConfig dataSourceConfig,
+                                    CodeGenConfig config) {
+        // 策略配置
+        StrategyConfig strategyConfig = getStrategyConfig(new String[]{config.getTableName()}, config.getTablePrefix());
+        // 全局变量配置
+        GlobalConfig globalConfig = getGlobalConfig(config.getAuthor(), config.getModuleName());
+        // 包名配置
+        PackageConfig packageConfig = getPackageConfig(config.getPackageName());
+        // 自动生成
+        autoGenerator(dataSourceConfig, strategyConfig, globalConfig, packageConfig, config.getPackageName());
+        return true;
+    }
+
+    /**
+     * 根据表自动生成
+     *
      * @param packageName 包名
      * @param author      作者
      * @param moduleName  模块名
@@ -33,7 +53,7 @@ public class CodeGenUtil {
                                     String packageName, String author,
                                     String moduleName, String... tableNames) {
         // 策略配置
-        StrategyConfig strategyConfig = getStrategyConfig(tableNames);
+        StrategyConfig strategyConfig = getStrategyConfig(tableNames, null);
         // 全局变量配置
         GlobalConfig globalConfig = getGlobalConfig(author, moduleName);
         // 包名配置
@@ -125,7 +145,7 @@ public class CodeGenUtil {
      * @param tableNames 表名
      * @return StrategyConfig
      */
-    private StrategyConfig getStrategyConfig(String[] tableNames) {
+    private StrategyConfig getStrategyConfig(String[] tableNames, String prefix) {
         return new StrategyConfig()
                 .setEntityLombokModel(true)
                 //表名生成策略  下划线转驼峰
@@ -133,6 +153,7 @@ public class CodeGenUtil {
                 .setColumnNaming(NamingStrategy.underline_to_camel)
                 //需要生成的的表名，多个表名传数组
                 .setInclude(tableNames)
+                .setTablePrefix(prefix)
                 .setRestControllerStyle(true)
                 .setControllerMappingHyphenStyle(true);
 

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * TODO 求你写点注释吧
+ * 代码生成测试类
  *
  * @author qingdong.zhang
  * @version 1.0
@@ -34,8 +34,7 @@ class CodeGenUtilTest {
                 .setPassword("root")
                 .setDriverName("com.mysql.cj.jdbc.Driver");
         CodeGenUtil codeGenUtil = new CodeGenUtil();
-        codeGenUtil.generateByTables(dataSourceConfig, codeGenConfig.getPackageName(), codeGenConfig.getAuthor(), codeGenConfig.getModuleName(), codeGenConfig.getTableName());
-
+        codeGenUtil.generateByTables(dataSourceConfig, codeGenConfig);
 
     }
 }
