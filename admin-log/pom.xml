@@ -20,11 +20,11 @@
             <artifactId>admin-common</artifactId>
             <version>${admin.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.ronhan</groupId>-->
-<!--            <artifactId>admin-security</artifactId>-->
-<!--            <version>${admin.version}</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.ronhan</groupId>
+            <artifactId>admin-security</artifactId>
+            <version>${admin.version}</version>
+        </dependency>
     </dependencies>
 
 

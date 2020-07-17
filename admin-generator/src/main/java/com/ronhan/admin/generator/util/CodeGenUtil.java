@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
 import com.ronhan.admin.generator.domain.CodeGenConfig;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -153,7 +154,7 @@ public class CodeGenUtil {
                 .setColumnNaming(NamingStrategy.underline_to_camel)
                 //需要生成的的表名，多个表名传数组
                 .setInclude(tableNames)
-                .setTablePrefix(prefix)
+                .setTablePrefix(StringUtils.isEmpty(prefix)?"":prefix)
                 .setRestControllerStyle(true)
                 .setControllerMappingHyphenStyle(true);
 

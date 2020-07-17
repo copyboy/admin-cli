@@ -23,18 +23,19 @@ class CodeGenUtilTest {
         codeGenConfig.setAuthor("qingdong.zhang");
         codeGenConfig.setComments("comments");
         codeGenConfig.setModuleName("generator");
-        codeGenConfig.setTableName("m_license_detail");
-        codeGenConfig.setTablePrefix("m_");
+        codeGenConfig.setTableName("sys_log");
+        codeGenConfig.setTablePrefix("");
         codeGenConfig.setPackageName("com.ronhan.admin.generator.tmp");
 
         DataSourceConfig dataSourceConfig = new DataSourceConfig()
                 .setDbType(DbType.MYSQL)
-                .setUrl("jdbc:mysql://127.0.0.1:3306/pluginx?serverTimezone=UTC")
+                .setUrl("jdbc:mysql://127.0.0.1:3306/ronhan?serverTimezone=UTC")
                 .setUsername("root")
                 .setPassword("root")
                 .setDriverName("com.mysql.cj.jdbc.Driver");
         CodeGenUtil codeGenUtil = new CodeGenUtil();
-        codeGenUtil.generateByTables(dataSourceConfig, codeGenConfig);
+        codeGenUtil.generateByTables(dataSourceConfig, codeGenConfig.getPackageName(),
+                codeGenConfig.getAuthor(), codeGenConfig.getModuleName(), codeGenConfig.getTableName());
 
     }
 }
