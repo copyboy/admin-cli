@@ -45,7 +45,8 @@ public class SysCodeServiceImpl implements SysCodeService {
                 .setPassword("password")
                 .setDriverName("driverName");
         CodeGenUtil codeGenUtil = new CodeGenUtil();
-        codeGenUtil.generateByTables(dataSourceConfig, codeGenConfig.getPackageName(), codeGenConfig.getAuthor(), codeGenConfig.getModuleName(), codeGenConfig.getTableName());
+        codeGenUtil.generateByTables(dataSourceConfig, codeGenConfig.getPackageName(),
+                codeGenConfig.getAuthor(), codeGenConfig.getModuleName(), codeGenConfig.getTableName());
         return true;
     }
 }

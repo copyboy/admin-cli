@@ -20,8 +20,8 @@
         <module>admin-common</module>
         <module>admin-log</module>
         <module>admin-generator</module>
+        <module>admin-security</module>
         <!--        <module>admin-system</module>-->
-<!--        <module>admin-security</module>-->
     </modules>
 
     <properties>
