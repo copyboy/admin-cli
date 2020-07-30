@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
 @Component
 public class DataScopeInterceptor extends AbstractSqlParserHandler implements Interceptor {
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {

@@ -3,6 +3,8 @@ package com.ronhan.admin.modules.data.mybatis;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.Resource;
+
 /**
  * MyBatisPlusConfig
  *

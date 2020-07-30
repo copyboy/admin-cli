@@ -21,7 +21,7 @@ public class SysDataSource {
      */
     private String name;
     /**
-     * jdbcurl
+     * jdbc url
      */
     private String url;
 

@@ -44,9 +44,9 @@ public class SysCodeGenController {
         return R.ok(sysCodeService.findColumnList(tableName, tableSchema));
     }
 
-    @PreAuthorize("hasAuthority('sys:codegen:codegen')")
+//    @PreAuthorize("hasAuthority('sys:codegen:codegen') or hasRole('ADMIN')")
     @PostMapping("/codegen")
-    public R generatorCode(@RequestBody CodeGenConfig codeGenConfig){
+    public R generatorCode(CodeGenConfig codeGenConfig){
         return R.ok(sysCodeService.generatorCode(codeGenConfig));
     }
 }

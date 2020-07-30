@@ -7,3 +7,9 @@ spring:
     name: admin
   profiles:
     active: dev
+
+  security:
+    user:
+      name: admin
+      password: admin
+      roles: ADMIN

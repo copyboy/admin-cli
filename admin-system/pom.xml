@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>admin-system</artifactId>
+    <packaging>jar</packaging>
     <version>0.1</version>
     <description>admin 系统模块</description>
 

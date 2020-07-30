@@ -8,6 +8,7 @@ import com.ronhan.admin.generator.domain.SysTableEntity;
 import com.ronhan.admin.generator.mapper.SysCodeMapper;
 import com.ronhan.admin.generator.service.SysCodeService;
 import com.ronhan.admin.generator.util.CodeGenUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,6 +27,18 @@ public class SysCodeServiceImpl implements SysCodeService {
     @Resource
     private SysCodeMapper sysCodeMapper;
 
+    @Value("${spring.datasource.url}")
+    private String url;
+
+    @Value("${spring.datasource.username}")
+    private String username;
+
+    @Value("${spring.datasource.password}")
+    private String password;
+
+    @Value("${spring.datasource.driver-class-name}")
+    private String driverName;
+
     @Override
     public List<SysTableEntity> findTableList(String tableSchema) {
         return sysCodeMapper.findTableList(tableSchema);
@@ -40,10 +53,10 @@ public class SysCodeServiceImpl implements SysCodeService {
     public boolean generatorCode(CodeGenConfig codeGenConfig) {
         DataSourceConfig dataSourceConfig = new DataSourceConfig()
                 .setDbType(DbType.MYSQL)
-                .setUrl("url")
-                .setUsername("username")
-                .setPassword("password")
-                .setDriverName("driverName");
+                .setUrl(url)
+                .setUsername(username)
+                .setPassword(password)
+                .setDriverName(driverName);
         CodeGenUtil codeGenUtil = new CodeGenUtil();
         codeGenUtil.generateByTables(dataSourceConfig, codeGenConfig.getPackageName(),
                 codeGenConfig.getAuthor(), codeGenConfig.getModuleName(), codeGenConfig.getTableName());
