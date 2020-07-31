@@ -75,7 +75,20 @@ class SysCodeGenControllerTest {
         config.setAuthor("qingdong.zhang");
         config.setComments("TODO 求你写点注释吧");
         config.setTablePrefix("");
-        config.setTableName("sys_user");
+        config.setTableName("sys_user_role");
+        /**
+         * sys_dept
+         * sys_dict
+         * sys_dict_item
+         * sys_log
+         * sys_menu
+         * sys_role
+         * sys_role_dept
+         * sys_role_menu
+         * sys_tenant
+         * sys_user
+         * sys_user_role
+         * */
         mvc.perform(MockMvcRequestBuilders
                 .post("/codegen/codegen")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
