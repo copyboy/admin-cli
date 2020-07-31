@@ -52,6 +52,7 @@ class SysCodeGenControllerTest {
     }
 
     @Test
+    @SuppressWarnings({"deprecation"})
     void getTableColumnList() throws Exception {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("tableSchema","ronhan");
@@ -59,8 +60,8 @@ class SysCodeGenControllerTest {
 
         mvc.perform(MockMvcRequestBuilders
                 .get("/codegen/getTableColumnList")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8)
                 .params(params))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
@@ -76,19 +77,17 @@ class SysCodeGenControllerTest {
         config.setComments("TODO 求你写点注释吧");
         config.setTablePrefix("");
         config.setTableName("sys_user_role");
-        /**
-         * sys_dept
-         * sys_dict
-         * sys_dict_item
-         * sys_log
-         * sys_menu
-         * sys_role
-         * sys_role_dept
-         * sys_role_menu
-         * sys_tenant
-         * sys_user
-         * sys_user_role
-         * */
+//          sys_dept
+//          sys_dict
+//          sys_dict_item
+//          sys_log
+//          sys_menu
+//          sys_role
+//          sys_role_dept
+//          sys_role_menu
+//          sys_tenant
+//          sys_user
+//          sys_user_role
         mvc.perform(MockMvcRequestBuilders
                 .post("/codegen/codegen")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)

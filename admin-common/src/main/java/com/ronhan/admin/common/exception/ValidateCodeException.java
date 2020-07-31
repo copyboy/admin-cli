@@ -1,6 +1,6 @@
 package com.ronhan.admin.common.exception;
 
-import javax.naming.AuthenticationException;
+import org.springframework.security.core.AuthenticationException;
 
 /**
  * 验证码异常

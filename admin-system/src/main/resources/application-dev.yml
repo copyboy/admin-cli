@@ -14,3 +14,15 @@ spring:
 
 admin:
   tenant:
+    ignoreTenantTables:
+      - sys_tenant
+      - sys_menu
+      - sys_user_role
+      - sys_role_menu
+      - sys_role_dept
+      - sys_user_role
+      - sys_dict_item
+      - TABLES
+      - COLUMNS
+      - sys_job
+    tenantIdColumn: tenant_id

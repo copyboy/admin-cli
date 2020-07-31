@@ -29,8 +29,9 @@ public class SecurityUser implements UserDetails {
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public SecurityUser(LoginType loginType, Long userId, String username,
-                        String password, Collection<? extends GrantedAuthority> authorities) {
+    public SecurityUser(Long userId, String username, String password,
+                        Collection<? extends GrantedAuthority> authorities,
+                        LoginType loginType) {
         this.loginType = loginType;
         this.userId = userId;
         this.username = username;

@@ -1,12 +1,18 @@
 package com.ronhan.admin.modules.sys.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ronhan.admin.modules.sys.domain.SysDept;
+import com.ronhan.admin.modules.sys.dto.DeptDTO;
 import com.ronhan.admin.modules.sys.mapper.SysDeptMapper;
 import com.ronhan.admin.modules.sys.service.ISysDeptService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ronhan.admin.modules.sys.util.AdminUtil;
+import com.ronhan.admin.modules.sys.vo.DeptTreeVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +43,41 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     @Override
     public String selectDeptNameByDeptId(int deptId) {
         return baseMapper.selectOne(Wrappers.<SysDept>query().lambda().select(SysDept::getName).eq(SysDept::getDeptId, deptId)).getName();
+    }
+
+    @Override
+    public List<SysDept> selectDeptList() {
+        List<SysDept> deptList = baseMapper.selectList(Wrappers.<SysDept>lambdaQuery().select(SysDept::getDeptId, SysDept::getName, SysDept::getParentId, SysDept::getSort, SysDept::getCreateTime));
+        List<SysDept> sysDeptList = deptList.stream()
+                .filter(sysDept -> sysDept.getParentId() == 0 || ObjectUtil.isNull(sysDept.getParentId()))
+                .peek(sysDept -> sysDept.setLevel(0))
+                .collect(Collectors.toList());
+        AdminUtil.findChildren(sysDeptList, deptList);
+        return sysDeptList;
+    }
+
+    @Override
+    public List<DeptTreeVo> getDeptTree() {
+        List<SysDept> deptList = baseMapper.selectList(Wrappers.<SysDept>query().select("dept_id", "name", "parent_id", "sort", "create_time"));
+        List<DeptTreeVo> collect = deptList.stream().filter(sysDept -> sysDept.getParentId() == 0 || ObjectUtil.isNull(sysDept.getParentId()))
+                .map(sysDept -> {
+                    DeptTreeVo deptTreeVo = new DeptTreeVo();
+                    deptTreeVo.setId(sysDept.getDeptId());
+                    deptTreeVo.setLabel(sysDept.getName());
+                    return deptTreeVo;
+
+                }).collect(Collectors.toList());
+
+        AdminUtil.findChildren1(collect,deptList);
+        return collect;
+    }
+
+    @Override
+    public boolean updateDeptById(DeptDTO deptDto) {
+        SysDept sysDept = new SysDept();
+        BeanUtils.copyProperties(deptDto, sysDept);
+        sysDept.setUpdateTime(LocalDateTime.now());
+        return this.updateById(sysDept);
     }
 
     /**

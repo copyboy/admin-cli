@@ -2,6 +2,8 @@ package com.ronhan.admin.modules.sys.service;
 
 import com.ronhan.admin.modules.sys.domain.SysDept;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ronhan.admin.modules.sys.dto.DeptDTO;
+import com.ronhan.admin.modules.sys.vo.DeptTreeVo;
 
 import java.util.List;
 
@@ -27,5 +29,20 @@ public interface ISysDeptService extends IService<SysDept> {
      * @return
      */
     String selectDeptNameByDeptId(int deptId);
+
+    /**
+     * 查询部门信息
+     */
+    List<SysDept> selectDeptList();
+
+    /**
+     * 获取部门树
+     */
+    List<DeptTreeVo> getDeptTree();
+
+    /**
+     * 更新部门
+     */
+    boolean updateDeptById(DeptDTO entity);
 
 }
