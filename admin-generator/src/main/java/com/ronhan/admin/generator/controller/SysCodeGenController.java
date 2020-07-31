@@ -46,7 +46,7 @@ public class SysCodeGenController {
 
 //    @PreAuthorize("hasAuthority('sys:codegen:codegen') or hasRole('ADMIN')")
     @PostMapping("/codegen")
-    public R generatorCode(CodeGenConfig codeGenConfig){
+    public R generatorCode(@RequestBody CodeGenConfig codeGenConfig){
         return R.ok(sysCodeService.generatorCode(codeGenConfig));
     }
 }
