@@ -12,6 +12,10 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/ronhan?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
     type: com.zaxxer.hikari.HikariDataSource
 
+jwt:
+  header: Authorization
+  tokenHead: 'Bearer '
+
 admin:
   tenant:
     ignoreTenantTables:

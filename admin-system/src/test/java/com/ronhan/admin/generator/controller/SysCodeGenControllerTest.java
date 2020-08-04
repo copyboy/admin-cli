@@ -6,6 +6,7 @@ import com.ronhan.admin.generator.domain.CodeGenConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,17 +29,11 @@ import javax.annotation.Resource;
  */
 @SpringBootTest(classes = {AdminApplication.class})
 @Slf4j
+@AutoConfigureMockMvc
 class SysCodeGenControllerTest {
 
-    MockMvc mvc;
-
     @Resource
-    private WebApplicationContext wac;
-
-    @BeforeEach
-    void setUp() {
-        mvc = MockMvcBuilders.webAppContextSetup(wac).build();
-    }
+    private MockMvc mvc;
 
     @Test
     @SuppressWarnings({"deprecation"})

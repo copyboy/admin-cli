@@ -1,6 +1,7 @@
 package com.ronhan.admin.modules.sys.dto;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  * @since 2020-07-31 12:01
  */
 @Data
+@Accessors(chain = true)
 public class UserDTO implements Serializable {
 
     private Integer userId;

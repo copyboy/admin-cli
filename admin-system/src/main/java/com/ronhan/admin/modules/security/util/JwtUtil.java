@@ -1,16 +1,17 @@
 package com.ronhan.admin.modules.security.util;
 
+import com.ronhan.admin.modules.security.property.JwtProperties;
 import com.ronhan.admin.security.SecurityUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
@@ -48,11 +49,8 @@ public class JwtUtil {
      */
     private static final long EXPIRE_TIME = 60 * 60 * 1000;
 
-    @Value("${jwt.header}")
-    private String tokenHeader;
-
-    @Value("${jwt.tokenHead}")
-    private String authTokenStart;
+    @Resource
+    private JwtProperties jwtProperties;
 
     /**
      * 生成令牌
@@ -185,9 +183,9 @@ public class JwtUtil {
      * 获取请求token
      */
     private String getToken(HttpServletRequest request) {
-        String token = request.getHeader(tokenHeader);
+        String token = request.getHeader(jwtProperties.getHeader());
         if (StringUtils.isNotEmpty(token)) {
-            token = token.substring(authTokenStart.length());
+            token = token.substring(jwtProperties.getTokenHead().length());
         }
         return token;
     }
