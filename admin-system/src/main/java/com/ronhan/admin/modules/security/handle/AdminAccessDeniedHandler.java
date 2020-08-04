@@ -26,7 +26,7 @@ public class AdminAccessDeniedHandler implements AccessDeniedHandler {
                        HttpServletResponse response,
                        AccessDeniedException e) throws IOException {
         log.error("请求访问: [{}] 接口， 没有访问权限" , request.getRequestURI());
-        SecurityUtil.writeJavaScript(R.error(HttpStatus.HTTP_UNAUTHORIZED,
+        SecurityUtil.writeJavaScript(R.error(HttpStatus.HTTP_FORBIDDEN,
                 "请求访问:" + request.getRequestURI() + "接口,没有访问权限"), response);
     }
 }
