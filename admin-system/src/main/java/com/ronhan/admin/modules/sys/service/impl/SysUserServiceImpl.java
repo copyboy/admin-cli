@@ -2,6 +2,7 @@ package com.ronhan.admin.modules.sys.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -12,10 +13,13 @@ import com.ronhan.admin.modules.sys.domain.SysUserRole;
 import com.ronhan.admin.modules.sys.dto.UserDTO;
 import com.ronhan.admin.modules.sys.mapper.SysUserMapper;
 import com.ronhan.admin.modules.sys.service.ISysDeptService;
+import com.ronhan.admin.modules.sys.service.ISysMenuService;
 import com.ronhan.admin.modules.sys.service.ISysUserRoleService;
 import com.ronhan.admin.modules.sys.service.ISysUserService;
 import com.ronhan.admin.modules.sys.util.AdminUtil;
 import com.ronhan.admin.security.SecurityUser;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +28,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -42,6 +48,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private ISysDeptService deptService;
     @Resource
     private AuthenticationManager authenticationManager;
+    @Resource
+    private ISysMenuService menuService;
 
     @Override
     public SysUser findByUserInfoName(String username) {
@@ -104,6 +112,30 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         //生成token
         SecurityUser userDetail = (SecurityUser) authentication.getPrincipal();
         return JwtUtil.generateToken(userDetail);
+    }
+
+    @Override
+    public SysUser findSecurityUserByUser(SysUser sysUser) {
+        LambdaQueryWrapper<SysUser> select = Wrappers.<SysUser>lambdaQuery()
+                .select(SysUser::getUserId, SysUser::getUsername, SysUser::getPassword);
+        if (StrUtil.isNotEmpty(sysUser.getUsername())) {
+            select.eq(SysUser::getUsername, sysUser.getUsername());
+        } else if (StrUtil.isNotEmpty(sysUser.getPhone())) {
+            select.eq(SysUser::getPhone, sysUser.getPhone());
+        } else if (ObjectUtil.isNotNull(sysUser.getUserId()) && sysUser.getUserId() != 0) {
+            select.eq(SysUser::getUserId, sysUser.getUserId());
+        }
+        return baseMapper.selectOne(select);
+    }
+
+    @Override
+    public Set<String> findPermsByUserId(Integer userId) {
+        return null;
+    }
+
+    @Override
+    public Set<String> findRoleIdByUserId(Integer userId) {
+        return null;
     }
 
 

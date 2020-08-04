@@ -37,7 +37,7 @@ public class MockIndexControllerTest {
     @SneakyThrows
     void postNewUserThenReturnWithId() {
         UserDTO user = new UserDTO();
-        user.setUsername("qingdong.zhang").setPassword("123456");
+        user.setUsername("qingdong.zhang").setPassword("123456").setPhone("13003080730");
         String response = mockMvc.perform(post("/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JSONUtil.toJsonStr(user)))

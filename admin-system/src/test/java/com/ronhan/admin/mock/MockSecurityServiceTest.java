@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
@@ -14,6 +15,7 @@ import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -36,19 +38,25 @@ public class MockSecurityServiceTest {
         mockMvc.perform(get("/info")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(StandardCharsets.UTF_8.name()))
-                .andExpect(status().isUnauthorized())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").isNumber())
+                .andExpect(jsonPath("$.code").value(401))
                 .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
     @SneakyThrows
-    @WithMockUser(username = "admin", roles = "ADMIN")
+//    @WithMockUser(username = "qingdong")
+    @WithUserDetails(value = "admin")
     void authorized_when_config_role() {
         mockMvc.perform(get("/info")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(StandardCharsets.UTF_8.name()))
-                .andExpect(status().isOk())
                 .andDo(mvcResult -> mvcResult.getResponse().setCharacterEncoding(StandardCharsets.UTF_8.name()))
-                .andDo(MockMvcResultHandlers.print());
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+//                .andExpect()
+                ;
+
     }
 }

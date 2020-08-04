@@ -11,6 +11,19 @@ spring:
     password: root
     url: jdbc:mysql://127.0.0.1:3306/ronhan?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
     type: com.zaxxer.hikari.HikariDataSource
+  redis:
+    database: 1
+    host: localhost
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: 30000ms
+        min-idle: 1
+    password: ''
+    port: 6379
+    timeout: 6000ms
+
 
 jwt:
   header: Authorization

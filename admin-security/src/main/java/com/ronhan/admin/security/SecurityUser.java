@@ -24,12 +24,12 @@ public class SecurityUser implements UserDetails {
 
     private LoginType loginType;
 
-    private Long userId;
+    private Integer userId;
     private String username;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public SecurityUser(Long userId, String username, String password,
+    public SecurityUser(Integer userId, String username, String password,
                         Collection<? extends GrantedAuthority> authorities,
                         LoginType loginType) {
         this.loginType = loginType;

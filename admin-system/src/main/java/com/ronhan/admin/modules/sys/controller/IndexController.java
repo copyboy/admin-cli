@@ -6,6 +6,7 @@ import com.ronhan.admin.common.utils.R;
 import com.ronhan.admin.modules.sys.dto.UserDTO;
 import com.ronhan.admin.modules.sys.service.ISysUserService;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -61,6 +62,7 @@ public class IndexController {
      * 详情
      **/
     @GetMapping("/info")
+    @PreAuthorize(value = "hasRole('ROOT')")
     public R info() {
         Map<String, Object> map = new HashMap<>();
         List<String> list = new ArrayList<>();

@@ -110,7 +110,7 @@ public class JwtUtil {
             }
             // 解析对应的权限以及用户id
             Object authors = claims.get(AUTHORITIES);
-            Long userId = (Long)claims.get(USERID);
+            Integer userId = (Integer)claims.get(USERID);
             Set<String> perms = new HashSet<>();
             if (authors instanceof List) {
                 for (Object object : (List) authors) {

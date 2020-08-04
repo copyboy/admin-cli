@@ -4,6 +4,8 @@ import com.ronhan.admin.modules.sys.domain.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ronhan.admin.modules.sys.dto.UserDTO;
 
+import java.util.Set;
+
 /**
  * <p>
  * 用户表 服务类
@@ -32,4 +34,19 @@ public interface ISysUserService extends IService<SysUser> {
      * 账户密码登录
      */
     String login(String username, String password);
+
+    /**
+     * 通过用户去查找用户(id/用户名/手机号)
+     */
+    SysUser findSecurityUserByUser(SysUser sysUser);
+
+    /**
+     * 根据用户id查询权限
+     */
+    Set<String> findPermsByUserId(Integer userId);
+
+    /**
+     * 通过用户id查询角色集合
+     */
+    Set<String> findRoleIdByUserId(Integer userId);
 }
