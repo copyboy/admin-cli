@@ -6,10 +6,7 @@ import com.ronhan.admin.common.utils.R;
 import com.ronhan.admin.modules.sys.dto.UserDTO;
 import com.ronhan.admin.modules.sys.service.ISysUserService;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -63,7 +60,7 @@ public class IndexController {
     /**
      * 详情
      **/
-    @RequestMapping("/info")
+    @GetMapping("/info")
     public R info() {
         Map<String, Object> map = new HashMap<>();
         List<String> list = new ArrayList<>();
