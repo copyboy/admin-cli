@@ -7,7 +7,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
@@ -34,8 +33,8 @@ public class MockSecurityServiceTest {
 
     @Test
     @SneakyThrows
-    void unauthorized_when_without_security_config() {
-        mockMvc.perform(get("/info")
+    void givenNonUser_whenTestInfo_thenCode401() {
+        mockMvc.perform(get("/test/info")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(StandardCharsets.UTF_8.name()))
                 .andExpect(status().isOk())
@@ -46,17 +45,19 @@ public class MockSecurityServiceTest {
 
     @Test
     @SneakyThrows
-//    @WithMockUser(username = "qingdong")
-    @WithUserDetails(value = "admin")
-    void authorized_when_config_role() {
-        mockMvc.perform(get("/info")
+    @WithMockUser(roles = "TEST_INFO")
+    void givenMockUser_whenTestInfo_thenCode200() {
+        mockMvc.perform(get("/test/info")
                 .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .characterEncoding(StandardCharsets.UTF_8.name()))
                 .andDo(mvcResult -> mvcResult.getResponse().setCharacterEncoding(StandardCharsets.UTF_8.name()))
-                .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
-//                .andExpect()
-                ;
+                .andExpect(jsonPath("$.code").isNumber())
+                .andExpect(jsonPath("$.code").value(200))
+                .andExpect(jsonPath("$.data.name").value("TEST USER"))
+                .andDo(MockMvcResultHandlers.print())
+        ;
 
     }
 }

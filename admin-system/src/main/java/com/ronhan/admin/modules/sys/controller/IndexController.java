@@ -62,7 +62,6 @@ public class IndexController {
      * 详情
      **/
     @GetMapping("/info")
-    @PreAuthorize(value = "hasRole('ROOT')")
     public R info() {
         Map<String, Object> map = new HashMap<>();
         List<String> list = new ArrayList<>();
@@ -78,5 +77,20 @@ public class IndexController {
     @RequestMapping("/logout")
     public String logout() {
         return "success";
+    }
+
+
+    /**
+     * 权限访问测试 接口
+     **/
+    @GetMapping("/test/info")
+    @PreAuthorize(value = "hasRole('TEST_INFO')")
+    public R testInfo() {
+        Map<String, Object> map = new HashMap<>();
+        List<String> list = new ArrayList<>();
+        list.add("TEST_INFO");
+        map.put("roles", list);
+        map.put("name", "TEST USER");
+        return R.ok(map);
     }
 }
