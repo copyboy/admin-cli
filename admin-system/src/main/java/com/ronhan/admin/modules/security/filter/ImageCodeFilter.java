@@ -3,11 +3,8 @@ package com.ronhan.admin.modules.security.filter;
 import cn.hutool.core.util.StrUtil;
 import com.ronhan.admin.common.constant.AdminConstant;
 import com.ronhan.admin.common.exception.ValidateCodeException;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -49,7 +46,7 @@ public class ImageCodeFilter extends OncePerRequestFilter {
                 // 进行验证码的校验
                 validateCode(request);
             } catch (ValidateCodeException ex) {
-                // 3. 校验不通过，调用SpringSecurity的校验失败处理器
+                // 3) 校验不通过，调用SpringSecurity的校验失败处理器
                 authenticationFailureHandler.onAuthenticationFailure(request, response, ex);
                 return;
             }

@@ -48,24 +48,26 @@ public class AdminWebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity
-            // 使用JWT，不需要CSRF配置
-            .csrf().disable()
-            // 短信登陆配置
+                // 使用JWT，不需要CSRF配置
+                .csrf().disable()
+                // 短信登陆配置
 //                .apply().and()
-            // 社交登陆
+                // 社交登陆
 //                .apply().and()
-            // 基于Token，不需要session
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-            // 过滤请求
-            .authorizeRequests()
-            // 登陆,注册,icon 允许匿名访问
-            .antMatchers("/login/**", "/register/**", "favicon.ico").anonymous()
-            // 静态资源访问
-            .antMatchers(HttpMethod.GET, "/*.html", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
-            // 除上面外的所有请求都需要鉴权认证
-            .anyRequest().authenticated().and()
-            // 禁止iframe
-            .headers().frameOptions().disable();
+                // 基于Token，不需要session
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                // 过滤请求
+                .authorizeRequests()
+                // 登陆,注册,icon 允许匿名访问
+                .antMatchers("/login/**", "/register/**", "favicon.ico").anonymous()
+                // 静态资源访问
+                .antMatchers(HttpMethod.GET, "/*.html", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
+                // 指定敏感资源，必须拥有某种角色或权限，使用AdminAccessDeniedHandler拦截请求
+                .antMatchers("/test/info").hasRole("TEST_INFO")
+                // 除上面外的所有请求都需要鉴权认证
+                .anyRequest().authenticated().and()
+                // 禁止iframe
+                .headers().frameOptions().disable();
 
         // 添加自定义异常入口
         httpSecurity
@@ -75,11 +77,11 @@ public class AdminWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 添加 JWT filter 用户名登陆
 //        httpSecurity
-                // 添加图形验证码校验过滤器
+        // 添加图形验证码校验过滤器
 //                .addFilterBefore(imageCodeFilter, UsernamePasswordAuthenticationFilter.class)
-                // 添加JWT验证过滤器
+        // 添加JWT验证过滤器
 //                .addFilterBefore(imageCodeFilter, UsernamePasswordAuthenticationFilter.class)
-                // 添加短信验证码过滤器
+        // 添加短信验证码过滤器
 //                .addFilterBefore(imageCodeFilter, UsernamePasswordAuthenticationFilter.class);
 
     }

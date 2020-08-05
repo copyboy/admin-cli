@@ -4,7 +4,6 @@ import com.ronhan.admin.AdminApplication;
 import lombok.SneakyThrows;
 import org.hamcrest.Matcher;
 import org.hamcrest.text.MatchesPattern;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,13 +11,10 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
 
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -41,7 +37,6 @@ public class MockSecurityServiceTest {
     @Test
     @SneakyThrows
     void givenNonUser_whenTestInfo_thenCode401() {
-        Matcher<String> matcher = MatchesPattern.matchesPattern("请求访问:/test/info接口,经jwt 认证失败,无法访问系统资源");
         mockMvc.perform(get("/test/info")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(StandardCharsets.UTF_8.name()))
@@ -49,7 +44,7 @@ public class MockSecurityServiceTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").isNumber())
                 .andExpect(jsonPath("$.code").value(401))
-                .andExpect(jsonPath("$.msg").value(matcher))
+                .andExpect(jsonPath("$.msg").value("请求访问: [/test/info] 接口,经JWT认证失败,无法访问系统资源."))
         ;
     }
 
@@ -58,7 +53,6 @@ public class MockSecurityServiceTest {
     @WithMockUser(roles = "TEST_ERR")
     void givenErrorRoleUser_whenTestInfo_thenCode403() {
 
-        Matcher<String> matcher = MatchesPattern.matchesPattern("请求访问: [/test/info] 接口， 没有访问权限");
         mockMvc.perform(get("/test/info")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -68,7 +62,7 @@ public class MockSecurityServiceTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").isNumber())
                 .andExpect(jsonPath("$.code").value(403))
-                .andExpect(jsonPath("$.data.name").value(matcher))
+                .andExpect(jsonPath("$.msg").value("请求访问: [/test/info] 接口,没有访问权限"))
         ;
 
     }

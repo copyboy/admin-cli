@@ -30,7 +30,7 @@ public class AdminAuthenticationEntryPointImpl implements AuthenticationEntryPoi
                          AuthenticationException e) throws IOException {
         log.error("请求访问: [{}] 接口， 经jwt认证失败，无法访问系统资源.", request.getRequestURI());
         SecurityUtil.writeJavaScript(R.error(HttpStatus.HTTP_UNAUTHORIZED,
-                "请求访问:" + request.getRequestURI() + "接口,经jwt 认证失败,无法访问系统资源"), response);
+                "请求访问: [" + request.getRequestURI() + "] 接口,经JWT认证失败,无法访问系统资源."), response);
 
     }
 }
