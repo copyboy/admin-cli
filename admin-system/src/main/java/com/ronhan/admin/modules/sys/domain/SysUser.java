@@ -104,7 +104,7 @@ public class SysUser implements Serializable {
      * 部门名称
      */
     @TableField(exist = false)
-    private String deptName;;
+    private String deptName;
 
     @TableField(exist = false)
     private String key;

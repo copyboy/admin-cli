@@ -25,7 +25,7 @@ public class RoleDTO {
     private String roleDesc;
     private String delFlag;
     private int dsType;
-    List<SysRoleMenu> roleMenus;
-    List<Integer> roleDepts;
+    private List<SysRoleMenu> roleMenus;
+    private List<Integer> roleDepts;
 
 }

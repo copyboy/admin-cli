@@ -66,7 +66,7 @@ public class ImageCodeFilter extends OncePerRequestFilter {
         if (redisCaptcha == null) {
             throw new ValidateCodeException("验证码已失效");
         }
-        if (!captcha.toLowerCase().equals(redisCaptcha)) {
+        if (!captcha.equalsIgnoreCase(redisCaptcha)) {
             throw new ValidateCodeException("验证码错误");
         }
     }

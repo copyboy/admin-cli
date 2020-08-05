@@ -1,5 +1,9 @@
 package com.ronhan.admin.common.utils;
 
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
@@ -18,16 +22,20 @@ import java.lang.reflect.Method;
  * @version 1.0
  * @since 2020-07-13 18:52
  */
+@UtilityClass
+@Slf4j
 public class IPUtil {
 
-    public static String getCityInfo(String ip) {
-        try {
-            //db
-            ClassPathResource resource = new ClassPathResource("/ip2region/ip2region.db");
+    public String getCityInfo(String ip) {
+
+        //db
+        ClassPathResource resource = new ClassPathResource("/ip2region/ip2region.db");
+        try (InputStream inputStream = resource.getInputStream()) {
+
             String tmpDir = System.getProperties().getProperty("java.io.tmpdir");
             String dbPath = tmpDir + "ip.db";
             File file = new File(dbPath);
-            InputStream inputStream = resource.getInputStream();
+
             FileUtils.copyInputStreamToFile(inputStream, file);
 
             //查询算法
@@ -54,13 +62,13 @@ public class IPUtil {
 
             DataBlock dataBlock;
             if (!Util.isIpAddress(ip)) {
-                System.out.println("Error: Invalid ip address");
+                log.error("Ops! Error: Invalid ip address [{}]", ip);
             }
             dataBlock = (DataBlock) method.invoke(searcher, ip);
 
-            return dataBlock.getRegion();
+            return ObjectUtil.isNull(dataBlock)?dataBlock.getRegion():"Unknown";
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Ops!", e);
         }
         return null;
     }

@@ -1,6 +1,7 @@
 package com.ronhan.admin.log.util;
 
 import com.ronhan.admin.log.annotation.SysOperaLog;
+import lombok.experimental.UtilityClass;
 import org.aspectj.lang.JoinPoint;
 
 import java.io.PrintWriter;
@@ -14,12 +15,13 @@ import java.lang.reflect.Method;
  * @version 1.0
  * @since 2020-07-17 16:27
  */
+@UtilityClass
 public class LogUtil {
 
     /**
      * 获取系统日志操作注解的描述信息
      */
-    public static String getControllerMethodDescription(JoinPoint point) throws Exception {
+    public String getControllerMethodDescription(JoinPoint point) throws Exception {
 
         // 获取连接点目标类名
         String targetName = point.getTarget().getClass().getName();
@@ -48,7 +50,7 @@ public class LogUtil {
     /**
      * 获取堆栈信息
      */
-    public static String getStackTrace(Throwable throwable) {
+    public String getStackTrace(Throwable throwable) {
         StringWriter sw = new StringWriter();
         try(PrintWriter pw = new PrintWriter(sw)) {
             throwable.printStackTrace(pw);

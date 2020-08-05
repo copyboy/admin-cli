@@ -1,5 +1,6 @@
 package com.ronhan.admin.common.utils;
 
+import cn.hutool.core.util.PageUtil;
 import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.List;
  * @since 2020-07-14 15:28
  */
 @UtilityClass
-public class PageUtil extends cn.hutool.core.util.PageUtil {
+public class AdminPageUtil extends PageUtil {
 
     /**
      * 分页

@@ -39,7 +39,7 @@ public class IndexController {
         if (StrUtil.isBlank(redisCode)) {
             throw new ValidateCodeException("验证码已失效");
         }
-        if (!userDTO.getSmsCode().toLowerCase().equals(redisCode)) {
+        if (!userDTO.getSmsCode().equalsIgnoreCase(redisCode)) {
             throw new ValidateCodeException("短信验证码错误");
         }
         return R.ok(userService.register(userDTO));

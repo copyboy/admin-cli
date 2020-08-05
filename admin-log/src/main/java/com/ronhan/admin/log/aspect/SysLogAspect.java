@@ -61,7 +61,7 @@ public class SysLogAspect {
     }
 
     @Before(value = "sysLogAspect()")
-    public void recordLog(JoinPoint joinPoint) throws Throwable {
+    public void recordLog(JoinPoint joinPoint) throws Exception {
 
         SysLog sysLog = new SysLog();
         sysLogThreadLocal.set(sysLog);

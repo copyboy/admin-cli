@@ -14,8 +14,8 @@ public enum MenuTypeEnum {
     BUTTON(2, "按钮"),
     ;
 
-    private int value;
-    private String desc;
+    private final int value;
+    private final String desc;
 
     MenuTypeEnum(int value, String desc) {
         this.value = value;

@@ -1,5 +1,7 @@
 package com.ronhan.admin.common.utils;
 
+import lombok.experimental.UtilityClass;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -10,9 +12,10 @@ import java.text.SimpleDateFormat;
  * @version 1.0
  * @since 2020-07-14 15:31
  */
+@UtilityClass
 public class ThreadLocalDateUtil {
 
-    public static ThreadLocal<DateFormat> threadLocal =
+    public ThreadLocal<DateFormat> threadLocal =
             ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
 
 }

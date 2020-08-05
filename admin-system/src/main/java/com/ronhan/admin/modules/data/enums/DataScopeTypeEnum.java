@@ -32,8 +32,8 @@ public enum DataScopeTypeEnum {
     CUSTOMIZE(4, "自定义");
 
 
-    private int type;
-    private String description;
+    private final int type;
+    private final String description;
 
 
     public static DataScopeTypeEnum valueOf(int type) {

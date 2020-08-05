@@ -1,5 +1,6 @@
 package com.ronhan.admin;
 
+import lombok.experimental.UtilityClass;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

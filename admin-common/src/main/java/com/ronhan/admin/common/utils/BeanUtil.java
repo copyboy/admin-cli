@@ -1,5 +1,8 @@
 package com.ronhan.admin.common.utils;
 
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
+
 import java.lang.reflect.Field;
 import java.util.Map;
 
@@ -10,12 +13,14 @@ import java.util.Map;
  * @version 1.0
  * @since 2020-07-13 18:29
  */
+@UtilityClass
+@Slf4j
 public class BeanUtil {
 
     /**
      * map集合封装成bean对象
      */
-    public static <T> T map2Bean(Map<String, Object> map, Class<T> clazz) throws Exception {
+    public <T> T map2Bean(Map<String, Object> map, Class<T> clazz) throws Exception {
         T obj = clazz.newInstance();
         if (null != map && !map.isEmpty()) {
             for (Map.Entry<String, Object> entry : map.entrySet()) {
@@ -33,7 +38,7 @@ public class BeanUtil {
                 try {
                     clazz.getMethod(setMethodName, field.getType()).invoke(obj, value);
                 } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
+                    log.error("Ops!", e);
                 }
             }
         }
@@ -43,8 +48,8 @@ public class BeanUtil {
     /**
      * 将map的value值转为实体类中字段类型匹配的方法
      */
-    private static Object convertValType(Object value, Class<?> fieldTypeClass) {
-        Object retVal = null;
+    private Object convertValType(Object value, Class<?> fieldTypeClass) {
+        Object retVal;
 
         if (Long.class.getName().equals(fieldTypeClass.getName())
                 || long.class.getName().equals(fieldTypeClass.getName())) {
@@ -67,7 +72,7 @@ public class BeanUtil {
     /**
      * 根据给定对象类匹配对象中的特定字段
      */
-    private static Field getClassField(Class<?> clazz, String fieldName) {
+    private Field getClassField(Class<?> clazz, String fieldName) {
         if (Object.class.getName().equals(clazz.getName())) {
             return null;
         }

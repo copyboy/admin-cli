@@ -2,8 +2,6 @@ package com.ronhan.admin.mock;
 
 import com.ronhan.admin.AdminApplication;
 import lombok.SneakyThrows;
-import org.hamcrest.Matcher;
-import org.hamcrest.text.MatchesPattern;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;

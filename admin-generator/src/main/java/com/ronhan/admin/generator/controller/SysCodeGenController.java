@@ -3,7 +3,6 @@ package com.ronhan.admin.generator.controller;
 import com.ronhan.admin.common.utils.R;
 import com.ronhan.admin.generator.domain.CodeGenConfig;
 import com.ronhan.admin.generator.service.SysCodeService;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
