@@ -5,6 +5,7 @@ import com.ronhan.admin.common.exception.BaseException;
 import com.ronhan.admin.common.utils.R;
 import com.ronhan.admin.security.SecurityUser;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +23,7 @@ import java.nio.charset.StandardCharsets;
  * @since 2020-07-17 14:35
  */
 @UtilityClass
+@Slf4j
 public class SecurityUtil {
 
 
@@ -48,6 +50,7 @@ public class SecurityUtil {
         try {
             return (SecurityUser) getAuthentication().getPrincipal();
         } catch (Exception e) {
+            log.error("登录状态过期 Unauthorized !");
             throw new BaseException("登录状态过期", HttpStatus.UNAUTHORIZED.value());
         }
     }
