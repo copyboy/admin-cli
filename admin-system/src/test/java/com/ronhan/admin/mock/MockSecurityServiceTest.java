@@ -34,7 +34,7 @@ public class MockSecurityServiceTest {
 
     @Test
     @SneakyThrows
-    void givenNonUser_whenTestInfo_thenCode401() {
+    void should_return_unauthorized_given_non_mock_user_when_get_test_info() {
         mockMvc.perform(get("/test/info")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding(StandardCharsets.UTF_8.name()))
@@ -49,7 +49,7 @@ public class MockSecurityServiceTest {
     @Test
     @SneakyThrows
     @WithMockUser(roles = "TEST_ERR")
-    void givenErrorRoleUser_whenTestInfo_thenCode403() {
+    void should_return_forbidden_given_mock_user_with_error_role_when_get_test_info() {
 
         mockMvc.perform(get("/test/info")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -68,7 +68,7 @@ public class MockSecurityServiceTest {
     @Test
     @SneakyThrows
     @WithMockUser(roles = "TEST_INFO")
-    void givenMockUser_whenTestInfo_thenCode200() {
+    void should_return_ok_given_mock_user_with_right_role_when_get_test_info() {
         mockMvc.perform(get("/test/info")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
