@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * TODO 求你写点注释吧
+ * 首页模拟测试
  *
  * @author qingdong.zhang
  * @version 1.0
@@ -37,7 +37,7 @@ public class MockIndexControllerTest {
     @SneakyThrows
     void postNewUserThenReturnWithId() {
         UserDTO user = new UserDTO();
-        user.setUsername("qingdong.zhang").setPassword("123456").setPhone("13003080730");
+        user.setUsername("qingdong.zhang").setPassword("123456");
         String response = mockMvc.perform(post("/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JSONUtil.toJsonStr(user)))

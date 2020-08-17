@@ -6,11 +6,14 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * 自定义异常处理器
@@ -74,5 +77,18 @@ public class BaseExceptionHandler {
     public R handlerValidateCodeException(ValidateCodeException e) {
         log.error(e.getMessage(), e);
         return R.error(e.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public R handlerMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        List<ObjectError> errors = e.getBindingResult().getAllErrors();
+        StringBuilder sb = new StringBuilder();
+        for (ObjectError error : errors) {
+            String message = error.getDefaultMessage();
+            sb.append(message).append(";");
+        }
+        String errorMsg = sb.toString();
+        log.error(errorMsg);
+        return R.error(errorMsg);
     }
 }

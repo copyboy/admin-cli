@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +34,7 @@ public class IndexController {
     private ISysUserService userService;
 
     @PostMapping("/register")
-    public R register(@RequestBody UserDTO userDTO) {
+    public R register(@RequestBody @Valid UserDTO userDTO) {
 
         String redisCode = valueOperations.get(userDTO.getPhone());
         if (StrUtil.isBlank(redisCode)) {
