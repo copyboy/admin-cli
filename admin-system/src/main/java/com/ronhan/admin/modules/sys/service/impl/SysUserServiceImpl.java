@@ -18,6 +18,7 @@ import com.ronhan.admin.modules.sys.service.ISysUserRoleService;
 import com.ronhan.admin.modules.sys.service.ISysUserService;
 import com.ronhan.admin.modules.sys.util.AdminUtil;
 import com.ronhan.admin.security.SecurityUser;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -127,12 +129,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public Set<String> findPermsByUserId(Integer userId) {
-        return null;
+        return menuService.findPermsByUserId(userId).stream().filter(StringUtils::isNotEmpty).collect(Collectors.toSet());
     }
 
     @Override
     public Set<String> findRoleIdByUserId(Integer userId) {
-        return null;
+        return userRoleService
+                .selectUserRoleListByUserId(userId)
+                .stream()
+                .map(sysUserRole -> "ROLE_" + sysUserRole.getRoleId())
+                .collect(Collectors.toSet());
     }
 
 

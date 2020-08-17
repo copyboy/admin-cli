@@ -1,10 +1,13 @@
 package com.ronhan.admin.modules.sys.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -69,7 +72,7 @@ public class SysMenu implements Serializable {
     /**
      * 菜单类型 （类型   0：目录   1：菜单   2：按钮）
      */
-    private String type;
+    private Integer type;
 
     /**
      * 创建时间
@@ -90,6 +93,28 @@ public class SysMenu implements Serializable {
      * 是否为外链
      */
     private Boolean isFrame;
+
+
+    /**
+     * 非数据库字段
+     * 父菜单名称
+     */
+    @TableField(exist = false)
+    private String parentName;
+
+    /**
+     * 非数据库字段
+     * 菜单等级
+     */
+    @TableField(exist = false)
+    private Integer level;
+
+    /**
+     * 非数据库字段
+     * 子菜单
+     */
+    @TableField(exist = false)
+    private List<SysMenu> children;
 
 
 }

@@ -1,7 +1,9 @@
 package com.ronhan.admin.modules.sys.service;
 
-import com.ronhan.admin.modules.sys.domain.SysMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ronhan.admin.modules.sys.domain.SysMenu;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +15,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysMenuService extends IService<SysMenu> {
 
+    /**
+     * 根据用户id查询权限
+     **/
+    List<String> findPermsByUserId(Integer userId);
+
+    /**
+     * 根据用户id查找菜单树
+     */
+    List<SysMenu> selectMenuTree(Integer uid);
 }

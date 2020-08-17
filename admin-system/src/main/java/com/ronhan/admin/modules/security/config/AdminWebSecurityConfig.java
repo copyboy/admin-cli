@@ -1,8 +1,11 @@
 package com.ronhan.admin.modules.security.config;
 
 import com.ronhan.admin.modules.security.UserDetailsServiceImpl;
+import com.ronhan.admin.modules.security.filter.ImageCodeFilter;
+import com.ronhan.admin.modules.security.filter.JwtAuthenticationTokenFilter;
 import com.ronhan.admin.modules.security.handle.AdminAccessDeniedHandler;
 import com.ronhan.admin.modules.security.handle.AdminAuthenticationEntryPointImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.annotation.Resource;
 
@@ -31,6 +35,10 @@ public class AdminWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Resource
     private UserDetailsServiceImpl userDetailsService;
+    @Resource
+    private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+    @Resource
+    private ImageCodeFilter imageCodeFilter;
 
     /**
      * 暴露AuthenticationManager Bean
@@ -64,6 +72,7 @@ public class AdminWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/*.html", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
                 // 指定敏感资源，必须拥有某种角色或权限，使用AdminAccessDeniedHandler拦截请求
                 .antMatchers("/test/info").hasRole("TEST_INFO")
+                .antMatchers("/auth/**").anonymous()
                 // 除上面外的所有请求都需要鉴权认证
                 .anyRequest().authenticated().and()
                 // 禁止iframe
@@ -76,13 +85,14 @@ public class AdminWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(new AdminAccessDeniedHandler());
 
         // 添加 JWT filter 用户名登陆
-//        httpSecurity
+        httpSecurity
         // 添加图形验证码校验过滤器
 //                .addFilterBefore(imageCodeFilter, UsernamePasswordAuthenticationFilter.class)
         // 添加JWT验证过滤器
-//                .addFilterBefore(imageCodeFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
         // 添加短信验证码过滤器
 //                .addFilterBefore(imageCodeFilter, UsernamePasswordAuthenticationFilter.class);
+        ;
 
     }
 

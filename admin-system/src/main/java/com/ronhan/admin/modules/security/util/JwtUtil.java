@@ -58,7 +58,7 @@ public class JwtUtil {
      * @return 令牌
      */
     public static String generateToken(SecurityUser userDetail) {
-        Map<String, Object> claims = new HashMap<>(3);
+        Map<String, Object> claims = new HashMap<>(8);
         claims.put(USERID,userDetail.getUserId());
         claims.put(USERNAME, userDetail.getUsername());
         claims.put(CREATED, new Date());

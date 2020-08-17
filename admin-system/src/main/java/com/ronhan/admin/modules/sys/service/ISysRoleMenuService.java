@@ -3,6 +3,8 @@ package com.ronhan.admin.modules.sys.service;
 import com.ronhan.admin.modules.sys.domain.SysRoleMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 角色菜单表 服务类
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysRoleMenuService extends IService<SysRoleMenu> {
 
+    List<Integer> getMenuIdByUserId(Integer uid);
 }
