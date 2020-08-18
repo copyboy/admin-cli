@@ -80,7 +80,7 @@ public class DataScopeInterceptor extends AbstractSqlParserHandler implements In
             // 解析角色Id
             List<String> roleIdList = user.getAuthorities().stream().map(GrantedAuthority::getAuthority)
                     .filter(authority -> authority.startsWith("ROLE_"))
-                    .map(authority -> authority.split("-")[1])
+                    .map(authority -> authority.split("_")[1])
                     .collect(Collectors.toList());
             // 通过角色Id查询范围权限
             Entity query = Db.use(dataSource)
