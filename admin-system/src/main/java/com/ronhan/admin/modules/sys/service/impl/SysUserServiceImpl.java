@@ -4,9 +4,12 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ronhan.admin.common.exception.BaseException;
+import com.ronhan.admin.modules.data.datascope.DataScope;
 import com.ronhan.admin.modules.security.util.JwtUtil;
 import com.ronhan.admin.modules.sys.domain.SysUser;
 import com.ronhan.admin.modules.sys.domain.SysUserRole;
@@ -18,6 +21,7 @@ import com.ronhan.admin.modules.sys.service.ISysUserRoleService;
 import com.ronhan.admin.modules.sys.service.ISysUserService;
 import com.ronhan.admin.modules.sys.util.AdminUtil;
 import com.ronhan.admin.security.SecurityUser;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -139,6 +143,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 .stream()
                 .map(sysUserRole -> "ROLE_" + sysUserRole.getRoleId())
                 .collect(Collectors.toSet());
+    }
+
+    @Override
+    public IPage<SysUser> getUsersWithRolePage(Page<SysUser> page, UserDTO userDTO) {
+        if (ObjectUtils.anyNotNull(userDTO) && userDTO.getDeptId() != null) {
+            userDTO.setDeptList(deptService.selectDeptIds(userDTO.getDeptId()));
+        }
+        return baseMapper.getUserVosPage(page, userDTO, new DataScope());
     }
 
 

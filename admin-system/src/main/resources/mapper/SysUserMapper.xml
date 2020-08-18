@@ -17,6 +17,43 @@
         <result column="lock_flag" property="lockFlag" />
         <result column="del_flag" property="delFlag" />
         <result column="tenant_id" property="tenantId" />
+        <!-- 附加属性 -->
+        <result column="deptName" property="deptName"/>
+        <collection property="roleList" ofType="com.ronhan.admin.modules.sys.domain.SysRole"
+                    select="com.ronhan.admin.modules.sys.mapper.SysRoleMapper.listRolesByUserId" column="user_id">
+        </collection>
     </resultMap>
+
+    <select id="getUserVosPage" resultMap="BaseResultMap">
+        SELECT
+        `user`.user_id,
+        `user`.username,
+        `user`.phone,
+        `user`.email,
+        `user`.avatar,
+        `user`.dept_id AS deptId,
+        `user`.create_time,
+        `user`.update_time,
+        `user`.del_flag,
+        `user`.lock_flag,
+        d.name AS deptName
+        FROM
+        sys_user AS `user`
+        LEFT JOIN sys_dept AS d ON d.dept_id = `user`.dept_id
+        <where>
+            <if test="query.username != null and query.username != ''">
+                and `user`.username LIKE CONCAT('%',#{query.username},'%')
+            </if>
+            <if test="query.deptId != null and query.deptId != ''">
+                and `user`.dept_id in
+                <foreach item="item" collection="query.deptList" separator="," open="(" close=")" index="">
+                    #{item, jdbcType=INTEGER}
+                </foreach>
+            </if>
+
+            and `user`.del_flag = '0'
+        </where>
+        ORDER BY `user`.create_time DESC
+    </select>
 
 </mapper>

@@ -1,7 +1,9 @@
 package com.ronhan.admin.modules.sys.service;
 
-import com.ronhan.admin.modules.sys.domain.SysUser;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ronhan.admin.modules.sys.domain.SysUser;
 import com.ronhan.admin.modules.sys.dto.UserDTO;
 
 import java.util.Set;
@@ -49,4 +51,12 @@ public interface ISysUserService extends IService<SysUser> {
      * 通过用户id查询角色集合
      */
     Set<String> findRoleIdByUserId(Integer userId);
+
+    /**
+     * 分页查询用户信息（含有角色信息）
+     *
+     * @param page    分页对象
+     * @param userDTO 参数列表
+     */
+    IPage<SysUser> getUsersWithRolePage(Page<SysUser> page, UserDTO userDTO);
 }
