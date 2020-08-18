@@ -1,4 +1,4 @@
-package com.ronhan.admin.modules.security.property;
+package com.ronhan.admin.modules.security.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

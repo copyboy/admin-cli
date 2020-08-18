@@ -44,7 +44,8 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         SecurityUser securityUser = jwtUtil.getUserFromToken(request);
-        if (ObjectUtil.isNotNull(securityUser)){
+        if (ObjectUtil.isNotNull(securityUser)) {
+            log.info("User [{}] , request uri -> {}", securityUser.getUsername(), request.getRequestURI());
             Set<String> permissions = userService.findPermsByUserId(securityUser.getUserId());
             Collection<? extends GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(permissions.toArray(new String[0]));
 

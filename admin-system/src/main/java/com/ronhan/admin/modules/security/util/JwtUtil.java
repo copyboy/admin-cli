@@ -1,6 +1,6 @@
 package com.ronhan.admin.modules.security.util;
 
-import com.ronhan.admin.modules.security.property.JwtProperties;
+import com.ronhan.admin.modules.security.properties.JwtProperties;
 import com.ronhan.admin.security.SecurityUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

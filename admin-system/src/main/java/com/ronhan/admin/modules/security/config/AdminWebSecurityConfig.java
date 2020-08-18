@@ -5,7 +5,6 @@ import com.ronhan.admin.modules.security.filter.ImageCodeFilter;
 import com.ronhan.admin.modules.security.filter.JwtAuthenticationTokenFilter;
 import com.ronhan.admin.modules.security.handle.AdminAccessDeniedHandler;
 import com.ronhan.admin.modules.security.handle.AdminAuthenticationEntryPointImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -67,7 +66,7 @@ public class AdminWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 过滤请求
                 .authorizeRequests()
                 // 登陆,注册,icon 允许匿名访问
-                .antMatchers("/login/**", "/register/**", "favicon.ico").anonymous()
+                .antMatchers("/login/**", "/register/**", "/favicon.ico").anonymous()
                 // 静态资源访问
                 .antMatchers(HttpMethod.GET, "/*.html", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
                 // 指定敏感资源，必须拥有某种角色或权限，使用AdminAccessDeniedHandler拦截请求
