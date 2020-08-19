@@ -82,6 +82,10 @@ public class DataScopeInterceptor extends AbstractSqlParserHandler implements In
                     .filter(authority -> authority.startsWith("ROLE_"))
                     .map(authority -> authority.split("_")[1])
                     .collect(Collectors.toList());
+            // 当权限角色Id不存在时,默认查询全部
+            if (CollUtil.isEmpty(roleIdList)) {
+                return invocation.proceed();
+            }
             // 通过角色Id查询范围权限
             Entity query = Db.use(dataSource)
                     .query("SELECT * FROM sys_role where role_id IN (" + CollUtil.join(roleIdList, ",") + ")")

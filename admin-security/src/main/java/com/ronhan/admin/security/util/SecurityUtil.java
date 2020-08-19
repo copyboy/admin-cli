@@ -50,7 +50,7 @@ public class SecurityUtil {
         try {
             return (SecurityUser) getAuthentication().getPrincipal();
         } catch (Exception e) {
-            log.error("登录状态过期 Unauthorized !");
+            log.error("登录状态过期 Unauthorized ! 原因: {}", e.getMessage());
             throw new BaseException("登录状态过期", HttpStatus.UNAUTHORIZED.value());
         }
     }
