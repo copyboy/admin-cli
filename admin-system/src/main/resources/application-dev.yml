@@ -45,8 +45,8 @@ admin:
     tenantIdColumn: tenant_id
 
 mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
       logic-delete-field: delFlag
@@ -54,6 +54,6 @@ mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   typeAliasesPackage: com.ronhan.admin.modules.sys.domain
 
-#logging:
-#  level:
-#    com.ronhan.admin.modules.sys.mapper: debug
+logging:
+  level:
+    com.ronhan.admin.modules.sys.mapper: debug
