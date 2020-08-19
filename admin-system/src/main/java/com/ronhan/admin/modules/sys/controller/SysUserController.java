@@ -8,11 +8,10 @@ import com.ronhan.admin.modules.sys.domain.SysUser;
 import com.ronhan.admin.modules.sys.dto.UserDTO;
 import com.ronhan.admin.modules.sys.service.ISysUserService;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 /**
  * <p>
@@ -38,6 +37,16 @@ public class SysUserController {
     @PreAuthorize("hasAuthority('sys:user:view')")
     public R getList(Page<SysUser> page, UserDTO userDTO) {
         return R.ok(userService.getUsersWithRolePage(page, userDTO));
+    }
+
+    /**
+     * 保存用户包括角色和部门
+     */
+    @SysOperaLog(description = "保存用户包括角色和部门")
+    @PostMapping
+    @PreAuthorize("hasAuthority('sys:user:add')")
+    public R insert(@RequestBody @Valid UserDTO userDto) {
+        return R.ok(userService.insertUser(userDto));
     }
 
 

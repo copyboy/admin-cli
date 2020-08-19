@@ -23,6 +23,7 @@ import com.ronhan.admin.modules.sys.util.AdminUtil;
 import com.ronhan.admin.security.SecurityUser;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -151,6 +153,24 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             userDTO.setDeptList(deptService.selectDeptIds(userDTO.getDeptId()));
         }
         return baseMapper.getUserVosPage(page, userDTO, new DataScope());
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean insertUser(UserDTO userDto) {
+        SysUser sysUser = new SysUser();
+        BeanUtils.copyProperties(userDto, sysUser);
+        // 默认密码 ron_han_123456
+        sysUser.setPassword(AdminUtil.encode("ron_han_123456"));
+        baseMapper.insertUser(sysUser);
+        List<SysUserRole> userRoles = userDto.getRoleList().stream().map(item -> {
+            SysUserRole sysUserRole = new SysUserRole();
+            sysUserRole.setRoleId(item);
+            sysUserRole.setUserId(sysUser.getUserId());
+            return sysUserRole;
+        }).collect(Collectors.toList());
+
+        return userRoleService.saveBatch(userRoles);
     }
 
 

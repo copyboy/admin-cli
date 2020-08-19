@@ -31,7 +31,6 @@ public interface ISysUserService extends IService<SysUser> {
      */
     boolean register(UserDTO userDTO);
 
-
     /**
      * 账户密码登录
      */
@@ -59,4 +58,9 @@ public interface ISysUserService extends IService<SysUser> {
      * @param userDTO 参数列表
      */
     IPage<SysUser> getUsersWithRolePage(Page<SysUser> page, UserDTO userDTO);
+
+    /**
+     * 保存用户以及角色部门等信息
+     */
+    boolean insertUser(UserDTO userDto);
 }

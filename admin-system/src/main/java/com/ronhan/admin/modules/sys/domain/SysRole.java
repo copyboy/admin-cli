@@ -1,10 +1,13 @@
 package com.ronhan.admin.modules.sys.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -76,5 +79,11 @@ public class SysRole implements Serializable {
      */
     private Integer tenantId;
 
+    /**
+     * 非数据库字段
+     * 部门ids
+     */
+    @TableField(exist = false)
+    private List<Integer> roleDeptList;
 
 }

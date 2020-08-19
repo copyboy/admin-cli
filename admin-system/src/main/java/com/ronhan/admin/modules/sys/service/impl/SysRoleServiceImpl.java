@@ -6,10 +6,12 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ronhan.admin.modules.sys.domain.SysRole;
 import com.ronhan.admin.modules.sys.domain.SysRoleDept;
 import com.ronhan.admin.modules.sys.mapper.SysRoleMapper;
+import com.ronhan.admin.modules.sys.service.ISysRoleDeptService;
 import com.ronhan.admin.modules.sys.service.ISysRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +26,9 @@ import java.util.stream.Collectors;
 @Service
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements ISysRoleService {
 
+    @Resource
+    private ISysRoleDeptService roleDeptService;
+
     @Override
     public List<SysRole> findRolesByUserId(Integer userId) {
         return baseMapper.listRolesByUserId(userId);
@@ -31,6 +36,15 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Override
     public List<SysRole> selectRoleList(String roleName) {
-        return null;
+        LambdaQueryWrapper<SysRole> sysRoleLambdaQueryWrapper = Wrappers.lambdaQuery();
+        if (StrUtil.isNotEmpty(roleName)) {
+            sysRoleLambdaQueryWrapper.like(SysRole::getRoleName, roleName);
+        }
+        List<SysRole> sysRoles = baseMapper.selectList(sysRoleLambdaQueryWrapper);
+        return sysRoles.stream().peek(sysRole ->
+                sysRole.setRoleDeptList(
+                        roleDeptService.getRoleDeptIds(sysRole.getRoleId()).stream().map(SysRoleDept::getDeptId)
+                                .collect(Collectors.toList()))
+        ).collect(Collectors.toList());
     }
 }

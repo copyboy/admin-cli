@@ -27,8 +27,10 @@ public class UserDTO implements Serializable {
     @NotEmpty(message = "手机号不能为空")
     private String phone;
     @Email
+    @NotEmpty(message = "邮箱不能为空")
     private String email;
     private String avatar;
+    //  0-正常，1-锁定
     private String lockFlag;
     private String delFlag;
     private List<Integer> roleList;

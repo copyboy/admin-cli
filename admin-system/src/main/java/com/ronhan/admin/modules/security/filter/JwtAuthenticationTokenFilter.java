@@ -45,7 +45,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         SecurityUser securityUser = jwtUtil.getUserFromToken(request);
         if (ObjectUtil.isNotNull(securityUser)) {
-            log.info("User [{}] , request uri -> {}", securityUser.getUsername(), request.getRequestURI());
+            log.info("User [{}], request method [{}], request uri -> {}", securityUser.getUsername(),request.getMethod(), request.getRequestURI());
             Set<String> permissions = userService.findPermsByUserId(securityUser.getUserId());
             Collection<? extends GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(permissions.toArray(new String[0]));
 
