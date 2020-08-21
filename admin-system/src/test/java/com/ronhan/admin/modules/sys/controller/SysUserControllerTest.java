@@ -17,6 +17,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
@@ -74,9 +75,10 @@ class SysUserControllerTest {
 
     @Test
     @SneakyThrows
+    @Transactional
     void should_add_one_account_given_new_account_when_post_user() {
         UserDTO user = new UserDTO();
-        user.setUsername("TEST_4_ALL").setPhone("13003080730").setEmail("2799665839@qq.com").setDeptId(6).setLockFlag("0");
+        user.setUsername("TEST_4_ALL").setPhone("13003080731").setEmail("2799665839@qq.com").setDeptId(6).setLockFlag("0");
         List<Integer> roleList = new ArrayList<>(Arrays.asList(5, 7, 8));
         user.setRoleList(roleList);
         mockMvc.perform(post("/user")

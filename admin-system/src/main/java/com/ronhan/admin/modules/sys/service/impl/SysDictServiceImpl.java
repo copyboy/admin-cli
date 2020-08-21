@@ -1,11 +1,14 @@
 package com.ronhan.admin.modules.sys.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.ronhan.admin.modules.sys.domain.SysDict;
 import com.ronhan.admin.modules.sys.domain.SysDictItem;
+import com.ronhan.admin.modules.sys.dto.DictDTO;
 import com.ronhan.admin.modules.sys.mapper.SysDictMapper;
 import com.ronhan.admin.modules.sys.service.ISysDictService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,5 +26,13 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
     @Override
     public List<SysDictItem> queryDictItemByDictName(String dictName) {
         return baseMapper.queryDictItemByDictName(dictName);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean updateDict(DictDTO dictDto) {
+        SysDict sysDict = new SysDict();
+        BeanUtil.copyProperties(dictDto, sysDict);
+        return updateById(sysDict);
     }
 }
