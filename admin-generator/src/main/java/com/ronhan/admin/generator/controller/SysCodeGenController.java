@@ -3,6 +3,7 @@ package com.ronhan.admin.generator.controller;
 import com.ronhan.admin.common.utils.R;
 import com.ronhan.admin.generator.domain.CodeGenConfig;
 import com.ronhan.admin.generator.service.SysCodeService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -43,7 +44,7 @@ public class SysCodeGenController {
         return R.ok(sysCodeService.findColumnList(tableName, tableSchema));
     }
 
-//    @PreAuthorize("hasAuthority('sys:codegen:codegen') or hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('sys:codegen:codegen') or hasRole('ADMIN')")
     @PostMapping("/codegen")
     public R generatorCode(@RequestBody CodeGenConfig codeGenConfig){
         return R.ok(sysCodeService.generatorCode(codeGenConfig));

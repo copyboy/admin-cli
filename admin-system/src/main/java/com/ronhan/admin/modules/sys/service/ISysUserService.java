@@ -63,4 +63,25 @@ public interface ISysUserService extends IService<SysUser> {
      * 保存用户以及角色部门等信息
      */
     boolean insertUser(UserDTO userDto);
+
+
+    /**
+     * 更新用户以及角色部门等信息
+     */
+    boolean updateUser(UserDTO userDto);
+
+    /**
+     * 删除用户信息
+     */
+    boolean removeUser(Integer userId);
+
+    /**
+     * 重置密码
+     */
+    boolean restPass(Integer userId);
+
+    /**
+     * 修改用户信息
+     */
+    boolean updateUserInfo(SysUser user);
 }

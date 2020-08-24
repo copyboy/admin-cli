@@ -160,17 +160,50 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public boolean insertUser(UserDTO userDto) {
         SysUser sysUser = new SysUser();
         BeanUtils.copyProperties(userDto, sysUser);
-        // 默认密码 ron_han_123456
-        sysUser.setPassword(AdminUtil.encode("ron_han_123456"));
+        // 默认密码 123456
+        sysUser.setPassword(AdminUtil.encode("123456"));
         baseMapper.insertUser(sysUser);
-        List<SysUserRole> userRoles = userDto.getRoleList().stream().map(item -> {
+        List<SysUserRole> userRoles = getSysUserRoles(userDto, sysUser);
+
+        return userRoleService.saveBatch(userRoles);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean updateUser(UserDTO userDto) {
+        SysUser sysUser = new SysUser();
+        BeanUtils.copyProperties(userDto, sysUser);
+        baseMapper.updateById(sysUser);
+        userRoleService.remove(Wrappers.<SysUserRole>lambdaQuery().eq(SysUserRole::getUserId, sysUser.getUserId()));
+        List<SysUserRole> userRoles = getSysUserRoles(userDto, sysUser);
+
+        return userRoleService.saveBatch(userRoles);
+    }
+
+    private List<SysUserRole> getSysUserRoles(UserDTO userDto, SysUser sysUser) {
+        return userDto.getRoleList().stream().map(item -> {
             SysUserRole sysUserRole = new SysUserRole();
             sysUserRole.setRoleId(item);
             sysUserRole.setUserId(sysUser.getUserId());
             return sysUserRole;
         }).collect(Collectors.toList());
+    }
 
-        return userRoleService.saveBatch(userRoles);
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean removeUser(Integer userId) {
+        baseMapper.deleteById(userId);
+        return userRoleService.remove(Wrappers.<SysUserRole>lambdaQuery().eq(SysUserRole::getUserId, userId));
+    }
+
+    @Override
+    public boolean restPass(Integer userId) {
+        return baseMapper.updateById(new SysUser().setPassword("123456").setUserId(userId)) > 0;
+    }
+
+    @Override
+    public boolean updateUserInfo(SysUser sysUser) {
+        return baseMapper.updateById(sysUser) > 0;
     }
 
 

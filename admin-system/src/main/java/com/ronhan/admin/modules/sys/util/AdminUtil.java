@@ -164,4 +164,12 @@ public class AdminUtil {
         }
         return !exist;
     }
+
+    /**
+     * 校验密码
+     */
+    public boolean validatePass(String newPass, String passwordEncoderOldPass) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.matches(newPass, passwordEncoderOldPass);
+    }
 }
