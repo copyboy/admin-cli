@@ -25,8 +25,6 @@ public interface ISysDeptService extends IService<SysDept> {
 
     /**
      * 根据部门id查询部门名称
-     * @param deptId
-     * @return
      */
     String selectDeptNameByDeptId(int deptId);
 

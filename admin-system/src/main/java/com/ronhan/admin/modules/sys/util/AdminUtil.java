@@ -168,8 +168,8 @@ public class AdminUtil {
     /**
      * 校验密码
      */
-    public boolean validatePass(String newPass, String passwordEncoderOldPass) {
+    public boolean validatePass(String oldPass, String passwordEncoderOldPass) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return passwordEncoder.matches(newPass, passwordEncoderOldPass);
+        return passwordEncoder.matches(oldPass, passwordEncoderOldPass);
     }
 }
